@@ -65,43 +65,18 @@ if (form) {
         const subject = document.getElementById('subject').value;
         const message = document.getElementById('message').value;
 
-        // Send data to PHP backend
-        sendContactForm(name, email, subject, message);
-
         // Show success message
         const button = form.querySelector('button');
         const originalText = button.innerHTML;
         button.innerHTML = '<i class="fas fa-check" style="margin-right: 10px;"></i>Message Sent!';
         button.style.background = '#10b981';
         
-        // Reset form
-        form.reset();
-        
-        // Reset button after 3 seconds
+        // Reset form after 3 seconds
         setTimeout(() => {
+            form.reset();
             button.innerHTML = originalText;
             button.style.background = '';
         }, 3000);
-    });
-}
-
-// ============================================
-// SEND CONTACT FORM TO BACKEND
-// ============================================
-function sendContactForm(name, email, subject, message) {
-    fetch('process_contact.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}&message=${encodeURIComponent(message)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
     });
 }
 
@@ -141,6 +116,5 @@ window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
-    // You can use this value for a progress bar
     document.documentElement.style.setProperty('--scroll-progress', scrolled + '%');
 });
